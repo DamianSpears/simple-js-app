@@ -15,3 +15,4 @@ let pokemonList = [
       type: 'water',
    },
 ];
+
