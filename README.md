@@ -1,2 +1,2 @@
 # simple-js-app
- JavaScript work for CareerFoundry
+ Pokedex project to display pokemon characteristics via the JavaScript frontend language
