@@ -1,11 +1,3 @@
-fetch('https://pokeapi.co/api/v2/pokemon/').then(function (response) {
-   response.json();
-}).then(function (pokemonList) {
-   console.log(pokemonList);
-}).catch(function (error) {
-   console.error(error);
-});
-
 let pokemonRepository = (function () {
    let pokemonList = [];
    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
@@ -34,18 +26,20 @@ let pokemonRepository = (function () {
    //An event listener has been added to show the details of each pokemon in the console.//
 
    function showDetails(pokemon) {
-         console.log(pokemon);
+         loadDetails(pokemon).then(function (){
+            console.log(pokemon);
+         });    
    };
    // This function logs each pokemon object to the console as the loop below goes through each object.//
 
-   function loadList(item) {
+   function loadList() {
       return fetch(apiUrl).then(function (response) {
          return response.json();
       }).then(function (json) {
          json.results.forEach(function (item) {
             let pokemon = {
                name: item.name,
-               detailsUrl: item.Url
+               detailsUrl: item.url
                //detailsUrl will only load JSON, which is why we will create
                //a new function to parse the JSON (showDetails)
             };
@@ -81,7 +75,7 @@ let pokemonRepository = (function () {
    //The above is a series of returns for the defined functions inside the IIFE//
 
 })();
-//Everything above is in an IIFE for 'Pokemon Repository//
+//Everything above is in an IIFE for 'Pokemon Repository'//
 
 pokemonRepository.loadList().then(function () {
    pokemonRepository.getAll().forEach(function (pokemon) {
