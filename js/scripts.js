@@ -11,19 +11,20 @@ let pokemonRepository = (function () {
    }
 
    function addListItem(item) {
-      let pokemonUlist = document.querySelector('.pokemon-list');
+      let pokemonlist = document.querySelector('.list-group');
       let listItem = document.createElement('li');
+      listItem.classList.add('list-group-item');
       let button = document.createElement('button');
-      button.classList.add('pokemon-button');
+      button.setAttribute('data-toggle', 'modal');
+      button.setAttribute('data-target','#exampleModal')
       button.innerText = item.name;
+      button.classList.add('btn-primary', 'list-group-item-action');
+      pokemonlist.appendChild(listItem);
       listItem.appendChild(button);
-      listItem.classList.add('list-group-item')
-      button.classList.add('btn-secondary');
-      pokemonUlist.appendChild(listItem);
-      button.addEventListener('click', function () {
+      button.addEventListener('click', function(event) {
          showDetails(item);
       });
-   };
+   }
    //addListItem currently goes through the array to turn all objects into a button and styles the object.//
    //An event listener has been added to show the details of each pokemon in the console.//
 
@@ -44,25 +45,23 @@ let pokemonRepository = (function () {
          console.error(e);
       })
    }
-   //Above is a promise that returns all data from the API url in a promise for asynchronous purposes
-   //once the url data is fetched, the forEach loop goes through and selects only the data described under the "a" variable
-   //which is then added to the pokemonList array via the 'add' function.
 
    function loadDetails(item) {
       let url = item.detailsUrl;
       return fetch(url).then(function (response) {
          return response.json();
       }).then(function (details) {
-         item.imageUrl = details.sprites.front_shiny;
+         item.imageUrlFront = details.sprites.front_shiny;
+         item.imageUrlBack = details.sprites.back_shiny;
          item.height = details.height;
-         item.type = details.types;
+         item.weight = details.weight;
+         item.type = details.types[0].type["name"] + ', '  + details.types[1].type["name"];
       }).catch(function (e) {
          console.error(e);
       });
    }
    //^This function will take the detailsUrl and parse the JSON code to be used in JS.
    //Then it will be used in the showDetails function to retrieve pokemon image, height, and type.
-   //the 'name' does not need to be passed through the loadDetails because it is not 
 
    function showDetails(details) {
       loadDetails(details).then(function () {
@@ -70,8 +69,35 @@ let pokemonRepository = (function () {
       });
    };
    // This function is waiting for an input for the details parameter, it should receive 
-   //details about height, type, and receive an imageUrl, which will be passed into the showModal function./
+   //details about name, height, type, and receive an imageUrl, which will be passed into the showModal function./
 
+   function showModal(item) {
+      let modalBody = $('.modal-body');
+      let modalTitle = $('.modal-title');
+      //above is hoisting all of the variables to be used in the showModal function.
+
+      modalBody.empty();
+      modalTitle.empty();
+      //above clears all existing content so the function below creates the only viewable content inside the modal.
+
+      let nameElement = $('<h1>' + item.name + '</h1>');
+      let imageElementFront = $('<img class= "modal-img" style = "width:50%">');
+      imageElementFront.attr('src', item.imageUrlFront);
+      let imageElementBack = $('<img class= "modal-img" style = "width:50%">');
+      imageElementBack.attr('src', item.imageUrlBack);
+      let height = $('<p>' + 'height: ' + item.height + '</p>');
+      let weight = $('<p>' + 'weight: ' + item.weight + '</p>');
+      let type = $('<p>' + 'type: ' + item.type + '</p>');
+      //above defines the elements to be used within the modalTitle and modalBody and in which order they should present.
+
+      modalTitle.append(nameElement);
+      modalBody.append(imageElementFront);
+      modalBody.append(imageElementBack);
+      modalBody.append(height);
+      modalBody.append(weight);
+      modalBody.append(type);
+
+   }
    return {
       getAll: getAll,
       add: add,
@@ -79,6 +105,7 @@ let pokemonRepository = (function () {
       showDetails: showDetails,
       loadList: loadList,
       loadDetails: loadDetails,
+      showModal: showModal
    };
    //The above is a series of returns for the defined functions inside the IIFE//
 
@@ -96,4 +123,3 @@ pokemonRepository.loadList().then(function () {
 
 //Within the loadlist there is a loop that currently adds the objects
 //inside the array as list items and gives them styling through CSS
-
