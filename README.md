@@ -1,2 +1,2 @@
 # simple-js-app
- Pokedex project to display pokemon characteristics via the JavaScript frontend language
+ This project implements HTML, CSS, JavaScript and accompanied frameworks/libraries to fetch and manipulate the pokeAPI into an app that allows a user to select a specific pokemon and display particular information. This app uses Javascript to fetch the data from the API, and Bootstrap to create the primary styling foundation. Additional styling is added through CSS to further customize the app and add animations.
