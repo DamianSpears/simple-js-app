@@ -1,19 +1,13 @@
+:root {
+   --primary-color: rgb(220,51,45);
+   --secondary-color: rgb(222,111,114);
+   --tertiary-color: #ffffff;
+   --dark-grey: rgb(39,44,49);
+}
+
 body {
    text-align: center;
-}
-.pokemon-list {
-   background-color: #A7C7E7;
-}
-
-button {
-   margin: 10px;
-   width: 500px;
-   height: 150px;
-   font-size: 5em;
-}
-
-button:hover {
-   cursor: pointer;
+   background-color: var(--primary-color);
 }
 
 html, 
@@ -24,4 +18,43 @@ body {
 img {
    width:40%;
 
+}
+
+button:hover {
+   cursor: pointer;
+   background-position: right center;
+}
+
+
+.btn-primary {
+   transition: .5s;
+   background-image: linear-gradient(90deg, var(--primary-color)0%, var(--secondary-color)60%, var(--tertiary-color)100%);
+   background-size: 150%;
+   color:var(--dark-grey);
+   font-size: 2em;
+   border-color: var(--primary-color);
+   border-radius: 15%;
+}
+
+button.close {
+   font-size: 2em;
+}
+
+p {
+   font-size: 2em;
+}
+
+.pokemon-list {
+   display:grid;
+   grid-template-columns: repeat(3,1fr);
+   grid-template-rows: auto;
+   border-style: none
+}
+
+.list-group-item {
+   border-color: var(--dark-grey);
+}
+
+h1 {
+   color:var(--tertiary-color);
 }
