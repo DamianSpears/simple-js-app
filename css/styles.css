@@ -15,6 +15,10 @@ body {
   font-family: Arial, sans-serif;
 }
 
+.navbar {
+   justify-content: center;
+}
+
 img {
    width:40%;
 
@@ -38,6 +42,7 @@ button:hover {
 
 button.close {
    font-size: 2em;
+   color: var(--tertiary-color);
 }
 
 p {
