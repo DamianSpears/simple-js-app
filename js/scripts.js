@@ -55,7 +55,7 @@ let pokemonRepository = (function () {
          item.imageUrlBack = details.sprites.back_shiny;
          item.height = details.height;
          item.weight = details.weight;
-         item.type = details.types[0].type["name"] + ', '  + details.types[1].type["name"];
+         item.type = details.types.map((type) => type.type.name).join(", ");
       }).catch(function (e) {
          console.error(e);
       });
